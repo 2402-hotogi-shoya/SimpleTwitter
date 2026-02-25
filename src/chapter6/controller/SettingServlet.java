@@ -103,7 +103,6 @@ public class SettingServlet extends HttpServlet {
 
     private boolean isValid(User user, List<String> errorMessages) {
 
-
 	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
@@ -120,11 +119,10 @@ public class SettingServlet extends HttpServlet {
             errorMessages.add("アカウント名は20文字以下で入力してください");
         }
         if (StringUtils.isEmpty(email)) {
-		errorMessages.add("メールアドレスを入力してください");
-	  } else if (!StringUtils.isEmpty(email) && (50 < email.length())) {
+        	errorMessages.add("メールアドレスを入力してください");
+        } else if (!StringUtils.isEmpty(email) && (50 < email.length())) {
             errorMessages.add("メールアドレスは50文字以下で入力してください");
         }
-
         if (errorMessages.size() != 0) {
             return false;
         }

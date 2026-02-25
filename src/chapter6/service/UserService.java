@@ -34,7 +34,6 @@ public class UserService {
 
     public void insert(User user) {
 
-
 	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
@@ -90,7 +89,6 @@ public class UserService {
 
     public User select(int userId) {
 
-
         log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
@@ -121,16 +119,14 @@ public class UserService {
 
         Connection connection = null;
         try {
-        	boolean updatePassword = false;
             // パスワード暗号化
         	if(!StringUtils.isEmpty(user.getPassword())) {
-        		updatePassword = true;
+        		String encPassword = CipherUtil.encrypt(user.getPassword());
+        		user.setPassword(encPassword);
         	}
-        	String encPassword = CipherUtil.encrypt(user.getPassword());
-        	user.setPassword(encPassword);
 
             connection = getConnection();
-            new UserDao().update(connection, user, updatePassword);
+            new UserDao().update(connection, user);
             commit(connection);
         } catch (RuntimeException e) {
             rollback(connection);
