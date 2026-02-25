@@ -49,21 +49,24 @@
 			            <br />
 			            <input type="submit" value="つぶやく">（140文字まで）
 			        </form>
-			        <div class="messages">
-					    <c:forEach items="${messages}" var="message">
-					        <div class="message">
-					            <div class="account-name">
-					                <span class="account"><c:out value="${message.account}" /></span>
-					                <span class="name"><c:out value="${message.name}" /></span>
-					            </div>
-					            <div class="text"><c:out value="${message.text}" /></div>
-					            <div class="date"><fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" /></div>
-					        </div>
-					    </c:forEach>
-					</div>
-			    </c:if>
+				</c:if>
+			    <div class="messages">
+				    <c:forEach items="${messages}" var="message">
+				        <div class="message">
+				            <div class="account-name">
+				                <span class="account">
+								    <a href="./?user_id=<c:out value="${message.userId}"/> ">
+								        <c:out value="${message.account}" />
+								    </a>
+								</span>
+				                <span class="name"><c:out value="${message.name}" /></span>
+				            </div>
+				            <div class="text"><c:out value="${message.text}" /></div>
+				            <div class="date"><fmt:formatDate value="${message.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" /></div>
+				        </div>
+				    </c:forEach>
+				</div>
 			</div>
-
             <div class="copyright"> Copyright(c)Hotogi</div>
         </div>
     </body>
