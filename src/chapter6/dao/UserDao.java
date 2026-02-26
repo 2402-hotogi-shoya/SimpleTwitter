@@ -78,6 +78,7 @@ public class UserDao {
             close(ps);
         }
     }
+
     public User select(Connection connection, String accountOrEmail, String password) {
 
 	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
@@ -107,6 +108,35 @@ public class UserDao {
             }
         } catch (SQLException e) {
 		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+            throw new SQLRuntimeException(e);
+        } finally {
+            close(ps);
+        }
+    }
+
+    /*
+     * String型のaccountを引数にもつ、selectメソッドを追加する
+     */
+    public User select(Connection connection, String account) {
+
+        PreparedStatement ps = null;
+        try {
+            String sql = "SELECT * FROM users WHERE account = ?";
+
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, account);
+
+            ResultSet rs = ps.executeQuery();
+
+            List<User> users = toUsers(rs);
+            if (users.isEmpty()) {
+                return null;
+            } else if (2 <= users.size()) {
+                throw new IllegalStateException("ユーザーが重複しています");
+            } else {
+                return users.get(0);
+            }
+        } catch (SQLException e) {
             throw new SQLRuntimeException(e);
         } finally {
             close(ps);
