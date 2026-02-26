@@ -84,7 +84,6 @@ public class SignUpServlet extends HttpServlet {
 
     private boolean isValid(User user, List<String> errorMessages) {
 
-
 	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
@@ -113,8 +112,8 @@ public class SignUpServlet extends HttpServlet {
         }
 
         if (StringUtils.isEmpty(email)) {
-		errorMessages.add("メールアドレスを入力してください");
-	  } else if (!StringUtils.isEmpty(email) && (50 < email.length())) {
+        	errorMessages.add("メールアドレスを入力してください");
+	 	} else if (!StringUtils.isEmpty(email) && (50 < email.length())) {
             errorMessages.add("メールアドレスは50文字以下で入力してください");
         }
 
