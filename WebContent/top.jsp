@@ -61,7 +61,7 @@
 							</span> <span class="name"><c:out value="${message.name}" /></span>
 						</div>
 						<div class="text">
-							<c:out value="${message.text}" />
+						<pre><c:out value="${message.text}" /></pre>
 						</div>
 						<div class="date">
 							<fmt:formatDate value="${message.createdDate}"
@@ -73,9 +73,13 @@
 							<input type="hidden" name="message-id" value="${message.id}">
 							<input type="submit" name="delete" value="削除">
 						</form>
+						<form action="edit" method="get">
+							<input type="hidden" name="message-id" value="${message.id}">
+							<input type="submit" value="編集">
+						</form>
 					</c:if>
-				</c:forEach>
-			</div>
+					</c:forEach>
+				</div>
 			</div>
             <div class="copyright"> Copyright(c)Hotogi</div>
         </div>
