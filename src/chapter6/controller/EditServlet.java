@@ -42,12 +42,26 @@ public class EditServlet extends HttpServlet {
     	log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
-		int messageId = Integer.parseInt(request.getParameter("message-id"));
+    	HttpSession session = request.getSession();
+    	List<String> errorMessages = new ArrayList<String>();
 
-		List<Message> messages = new MessageService().select(messageId);
+    	try{
+    		int messageId = Integer.parseInt(request.getParameter("message-id"));
 
-        request.setAttribute("message", messages.get(0));
-        request.getRequestDispatcher("edit.jsp").forward(request, response);
+    		List<Message> messages = new MessageService().select(messageId);
+    		request.setAttribute("message", messages.get(0));
+    		request.getRequestDispatcher("edit.jsp").forward(request, response);
+
+    	}catch(NumberFormatException e){
+			errorMessages.add("不正なパラメータが入力されました");
+			session.setAttribute("errorMessages", errorMessages);
+			response.sendRedirect("./");
+
+    	}catch(IndexOutOfBoundsException e){
+    		errorMessages.add("不正なパラメータが入力されました");
+			session.setAttribute("errorMessages", errorMessages);
+			response.sendRedirect("./");
+    	}
     }
 
 	@Override
