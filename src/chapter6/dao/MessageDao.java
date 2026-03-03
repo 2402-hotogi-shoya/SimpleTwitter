@@ -68,7 +68,7 @@ public class MessageDao {
         }
     }
 
-    public void delete(Connection connection, Message messageId) {
+    public void delete(Connection connection, int deleteId) {
 
 	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -82,7 +82,7 @@ public class MessageDao {
 
             ps = connection.prepareStatement(sql.toString());
 
-            ps.setInt(1, messageId.getId());
+            ps.setInt(1, deleteId);
 
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -93,7 +93,7 @@ public class MessageDao {
         }
     }
 
-    public List<Message> select(Connection connection, int messageId) {
+    public Message select(Connection connection, int messageId) {
 
 	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
@@ -101,9 +101,7 @@ public class MessageDao {
         PreparedStatement ps = null;
         try {
             StringBuilder sql = new StringBuilder();
-            sql.append("SELECT ");
-            sql.append("    id, ");
-            sql.append("    text ");
+            sql.append("SELECT * ");
             sql.append("FROM messages ");
             sql.append("WHERE ");
             sql.append("	id = ? "); //id
@@ -114,8 +112,13 @@ public class MessageDao {
 
             ResultSet rs = ps.executeQuery();
             List<Message> messages = toMessages(rs);
-
-            return messages;
+            if (messages.isEmpty()) {
+                return null;
+            } else if (2 <= messages.size()) {
+                throw new IllegalStateException("メッセージが重複しています");
+            } else {
+                return messages.get(0);
+            }
         } catch (SQLException e) {
 		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
             throw new SQLRuntimeException(e);
@@ -136,6 +139,9 @@ public class MessageDao {
                 Message message = new Message();
                 message.setId(rs.getInt("id"));
                 message.setText(rs.getString("text"));
+                message.setUserId(rs.getInt("user_id"));
+                message.setCreatedDate(rs.getDate("created_date"));
+                message.setUpdatedDate(rs.getDate("updated_date"));
 
                 messages.add(message);
             }

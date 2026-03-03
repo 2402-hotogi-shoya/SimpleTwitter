@@ -45,31 +45,34 @@ public class EditServlet extends HttpServlet {
     	HttpSession session = request.getSession();
     	List<String> errorMessages = new ArrayList<String>();
 
-    	try{
-    		int messageId = Integer.parseInt(request.getParameter("message-id"));
-
-    		List<Message> messages = new MessageService().select(messageId);
-    		request.setAttribute("message", messages.get(0));
-    		request.getRequestDispatcher("edit.jsp").forward(request, response);
-
-    	}catch(NumberFormatException e){
+    	if (!request.getParameter("message_id").matches("^[0-9]+$")) {
 			errorMessages.add("不正なパラメータが入力されました");
 			session.setAttribute("errorMessages", errorMessages);
 			response.sendRedirect("./");
+			return;
+		}
 
-    	}catch(IndexOutOfBoundsException e){
-    		errorMessages.add("不正なパラメータが入力されました");
+		int messageId = Integer.parseInt(request.getParameter("message_id"));
+        Message messages = new MessageService().select(messageId);
+
+		if (messages == null) {
+			errorMessages.add("不正なパラメータが入力されました");
 			session.setAttribute("errorMessages", errorMessages);
 			response.sendRedirect("./");
-    	}
+			return;
+		}
+		Message message = new MessageService().select(messageId);
+
+		request.setAttribute("message", message);
+		request.getRequestDispatcher("edit.jsp").forward(request, response);
     }
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
-		  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-			        " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+		" : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
 		HttpSession session = request.getSession();
 		List<String> errorMessages = new ArrayList<String>();
@@ -77,14 +80,14 @@ public class EditServlet extends HttpServlet {
 		String text = request.getParameter("text");
 		if (!isValid(text, errorMessages)) {
 			session.setAttribute("errorMessages", errorMessages);
-			response.sendRedirect("edit.jsp");
+			request.getRequestDispatcher("edit.jsp").forward(request, response);
 			return;
 		}
 
 		Message message = new Message();
 		message.setText(text);
 
-		int messageId = Integer.parseInt(request.getParameter("message-id"));
+		int messageId = Integer.parseInt(request.getParameter("message_id"));
 		message.setId(messageId);
 
 		new MessageService().update(message);
@@ -94,7 +97,7 @@ public class EditServlet extends HttpServlet {
 
     private boolean isValid(String text, List<String> errorMessages) {
 
-	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+    	log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
         if (StringUtils.isBlank(text)) {

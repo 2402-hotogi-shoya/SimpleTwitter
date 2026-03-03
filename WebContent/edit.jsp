@@ -11,7 +11,6 @@
 </head>
 <body>
 	<div class="main-contents">
-
 		<c:if test="${ not empty loginUser }">
 			<div class="profile">
 				<div class="name">
@@ -19,8 +18,7 @@
 						<c:out value="${loginUser.name}" />
 					</h2>
 				</div>
-				<div class="account">
-					@
+				<div class="account">@
 					<c:out value="${loginUser.account}" />
 				</div>
 				<div class="description">
@@ -41,10 +39,12 @@
 		<form action="edit" method="post">
 			<br />つぶやき<br />
 			<textarea name="text" cols="100" rows="5" class="tweet-box">${message.text}</textarea>
-			<br /> <input type="submit" value="更新" /> <input type="hidden"
-				name="message-id" value="${message.id}" /><br /> <a href="./">戻る</a>
+			<br />
+			<input type="submit" value="更新" />
+			<input type="hidden" name="message_id" value="${message.id}" />
+			<br />
+			<a href="./">戻る</a>
 		</form>
-
 		<div class="copyright">Copyright(c)YourName</div>
 	</div>
 </body>
