@@ -82,7 +82,7 @@
 						</c:if>
 						<c:if test="${ not empty loginUser }">
 						    <form action="reply" method="post">
-				            	返信<br />
+								返信<br />
 				            	<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
 				            	<br />
 				            	<input type="hidden" name="message_id" value="${message.id}">
