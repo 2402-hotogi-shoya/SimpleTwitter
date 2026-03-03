@@ -79,7 +79,10 @@ public class EditServlet extends HttpServlet {
 
 		Message message = new Message();
 		String text = request.getParameter("text");
+		int messageId = Integer.parseInt(request.getParameter("message_id"));
+
 		message.setText(text);
+		message.setId(messageId);
 
 		if (!isValid(text, errorMessages)) {
 			request.setAttribute("errorMessages", errorMessages);
@@ -87,9 +90,6 @@ public class EditServlet extends HttpServlet {
 			request.getRequestDispatcher("edit.jsp").forward(request, response);
 			return;
 		}
-
-		int messageId = Integer.parseInt(request.getParameter("message_id"));
-		message.setId(messageId);
 
 		new MessageService().update(message);
 
