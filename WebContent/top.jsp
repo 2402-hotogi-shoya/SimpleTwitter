@@ -80,6 +80,15 @@
 								<input type="submit" value="編集">
 							</form>
 						</c:if>
+						<c:if test="${ not empty loginUser }">
+						    <form action="reply" method="post">
+				            	返信<br />
+				            	<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
+				            	<br />
+				            	<input type="hidden" name="message_id" value="${message.id}">
+				            	<input type="submit" value="返信">
+			        		</form>
+						</c:if>
 					</c:forEach>
 				</div>
 			</div>
