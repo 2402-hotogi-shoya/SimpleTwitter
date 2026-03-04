@@ -12,9 +12,8 @@ import chapter6.beans.Comment;
 import chapter6.exception.SQLRuntimeException;
 import chapter6.logging.InitApplication;
 
+
 public class CommentDao {
-
-
     /**
     * ロガーインスタンスの生成
     */
@@ -32,7 +31,7 @@ public class CommentDao {
 
     public void insert(Connection connection, Comment comment) {
 
-	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+    	log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
         PreparedStatement ps = null;
@@ -61,10 +60,11 @@ public class CommentDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-		log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+        	log.log(Level.SEVERE, new Object(){}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
             throw new SQLRuntimeException(e);
         } finally {
             close(ps);
         }
     }
+
 }

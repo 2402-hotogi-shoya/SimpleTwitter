@@ -80,6 +80,22 @@
 								<input type="submit" value="編集">
 							</form>
 						</c:if>
+						<c:forEach items="${comments}" var="comments">
+							<c:if test="${ comments.messageId == message.id }">
+								<span class="comment_account">
+									<c:out value="${comments.account}" />
+								</span>
+								<span class="coment_name">
+									<c:out value="${comments.name}" />
+								</span>
+								<div class="comment_text">
+									<pre><c:out value="${comments.text}" /></pre>
+								</div>
+								<div class="comment_date">
+									<fmt:formatDate value="${comments.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" />
+								</div>
+							</c:if>
+						</c:forEach>
 						<c:if test="${ not empty loginUser }">
 						    <form action="comment" method="post">
 								返信<br />
