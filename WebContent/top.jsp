@@ -25,8 +25,8 @@
 			</div>
 		<form action="" method="get">
 			日付：
-			<input type="Date" name="start" > ～
-			<input type="Date" name="end" >
+			<input type="date" name="start" > ～
+			<input type="date" name="end" >
 			<input type="submit" value="絞り込み">
 		</form>
 		<c:if test="${ not empty loginUser }">
@@ -95,20 +95,24 @@
 			        		</form>
 						</c:if>
 						<c:forEach items="${comments}" var="comments">
-							<c:if test="${ comments.messageId == message.id }">
-								<span class="comment_account">
-									<c:out value="${comments.account}" />
-								</span>
-								<span class="coment_name">
-									<c:out value="${comments.name}" />
-								</span>
-								<div class="comment_text">
-									<pre><c:out value="${comments.text}" /></pre>
-								</div>
-								<div class="comment_date">
-									<fmt:formatDate value="${comments.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" />
-								</div>
-							</c:if>
+							<div class="message">
+								<c:if test="${ comments.messageId == message.id }">
+									<div class="account-name">
+										<span class="account">
+											<c:out value="${comments.account}" />
+										</span>
+										<span class="name">
+											<c:out value="${comments.name}" />
+										</span>
+									</div>
+									<div class="text">
+										<pre><c:out value="${comments.text}" /></pre>
+									</div>
+									<div class="date">
+										<fmt:formatDate value="${comments.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" />
+									</div>
+								</c:if>
+							</div>
 						</c:forEach>
 					</c:forEach>
 				</div>
