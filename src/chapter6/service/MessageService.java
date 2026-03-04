@@ -117,7 +117,7 @@ public class MessageService {
 				startDate = start + " 00:00:00";
 			}
 			if (!StringUtils.isEmpty(end) && end.matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")) {
-				startDate = end + " 23:59:59";
+				endDate = end + " 23:59:59";
 			}
 
 			/*
