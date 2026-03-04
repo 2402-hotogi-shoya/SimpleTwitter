@@ -4,6 +4,8 @@ import static chapter6.utils.CloseableUtil.*;
 import static chapter6.utils.DBUtil.*;
 
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,7 +87,7 @@ public class MessageService {
     /*
      * selectの引数にString型のuserIdを追加
      */
-    public List<UserMessage> select(String userId) {
+    public List<UserMessage> select(String userId, String start, String end) {
     	final int LIMIT_NUM = 1000;
 
 	      Connection connection = null;
@@ -102,12 +104,28 @@ public class MessageService {
 				id = Integer.parseInt(userId);
 			}
 
+			//日付取得
+			Date date = new Date();
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
+			String formatNowDate = dateFormat.format(date);
+
+			//デフォルト
+			String startDate = "2026-01-01" + " 00:00:00";
+			String endDate = formatNowDate + " 23:59:59";
+
+			if (!StringUtils.isEmpty(start) && start.matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")) {
+				startDate = start + " 00:00:00";
+			}
+			if (!StringUtils.isEmpty(end) && end.matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")) {
+				startDate = end + " 23:59:59";
+			}
+
 			/*
 			* messageDao.selectに引数としてInteger型のidを追加
 			* idがnullだったら全件取得する
 			* idがnull以外だったら、その値に対応するユーザーIDの投稿を取得する
 			*/
-			List<UserMessage> messages = new UserMessageDao().select(connection, id, LIMIT_NUM);
+			List<UserMessage> messages = new UserMessageDao().select(connection, id, LIMIT_NUM, startDate, endDate);
 			commit(connection);
 
             return messages;

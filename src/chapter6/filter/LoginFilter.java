@@ -1,4 +1,4 @@
-package filter;
+package chapter6.filter;
 
 import java.io.IOException;
 
@@ -26,12 +26,9 @@ public class LoginFilter implements Filter {
 		User loginUser = (User) session.getAttribute("loginUser");
 
 		if(loginUser != null) {
-//			chain.doFilter でリクエストのあった画面に遷移
 			chain.doFilter(request, response);
 		} else {
-//			response.sendRedirect でログイン画面に遷移
-//			※ログインしているか判定し、　遷移する画面を分岐する
-			((HttpServletResponse) response).sendRedirect("login.jsp");
+			((HttpServletResponse) response).sendRedirect("./login");
 		}
 	}
 

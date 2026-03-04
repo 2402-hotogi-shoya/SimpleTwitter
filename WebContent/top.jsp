@@ -23,7 +23,13 @@
 			        <a href="logout">ログアウト</a>
 			    </c:if>
 			</div>
-			<c:if test="${ not empty loginUser }">
+		<form action="" method="get">
+			日付：
+			<input type="Date" name="start" > ～
+			<input type="Date" name="end" >
+			<input type="submit" value="絞り込み">
+		</form>
+		<c:if test="${ not empty loginUser }">
 			    <div class="profile">
 			        <div class="name"><h2><c:out value="${loginUser.name}" /></h2></div>
 			        <div class="account">@<c:out value="${loginUser.account}" /></div>
