@@ -41,7 +41,7 @@ public class TopServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
+    	log.info(new Object(){}.getClass().getEnclosingClass().getName() +
         " : " + new Object(){}.getClass().getEnclosingMethod().getName());
 
         boolean isShowMessageForm = false;
@@ -50,7 +50,6 @@ public class TopServlet extends HttpServlet {
             isShowMessageForm = true;
         }
         /*
-         *
          * String型のuser_idの値をrequest.getParameter("user_id")で
          * JSPから受け取るように設定
          * MessageServiceのselectに引数としてString型のuser_idを追加
