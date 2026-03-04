@@ -40,7 +40,6 @@
 			    </div>
 			    <c:remove var="errorMessages" scope="session" />
 			</c:if>
-
 			<div class="form-area">
 			    <c:if test="${ isShowMessageForm }">
 			        <form action="message" method="post">
@@ -80,6 +79,15 @@
 								<input type="submit" value="編集">
 							</form>
 						</c:if>
+						<c:if test="${ not empty loginUser }">
+						    <form action="comment" method="post">
+								返信<br />
+				            	<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
+				            	<br />
+				            	<input type="hidden" name="message_id" value="${message.id}">
+				            	<input type="submit" value="返信">
+			        		</form>
+						</c:if>
 						<c:forEach items="${comments}" var="comments">
 							<c:if test="${ comments.messageId == message.id }">
 								<span class="comment_account">
@@ -96,15 +104,6 @@
 								</div>
 							</c:if>
 						</c:forEach>
-						<c:if test="${ not empty loginUser }">
-						    <form action="comment" method="post">
-								返信<br />
-				            	<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
-				            	<br />
-				            	<input type="hidden" name="message_id" value="${message.id}">
-				            	<input type="submit" value="返信">
-			        		</form>
-						</c:if>
 					</c:forEach>
 				</div>
 			</div>
