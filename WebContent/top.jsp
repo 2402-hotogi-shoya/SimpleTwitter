@@ -25,8 +25,8 @@
 			</div>
 		<form action="" method="get">
 			日付：
-			<input type="date" name="start" > ～
-			<input type="date" name="end" >
+			<input type="date" value="${start}" name="start" > ～
+			<input type="date" value="${end}" name="end" >
 			<input type="submit" value="絞り込み">
 		</form>
 		<c:if test="${ not empty loginUser }">

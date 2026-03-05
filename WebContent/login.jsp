@@ -11,7 +11,6 @@
     </head>
     <body>
         <div class="main-contents">
-
             <c:if test="${ not empty errorMessages }">
                 <div class="errorMessages">
                     <ul>
@@ -20,8 +19,8 @@
                         </c:forEach>
                     </ul>
                 </div>
+				<c:remove var="errorMessages" scope="session" />
             </c:if>
-
             <form action="login" method="post"><br />
                 <label for="accountOrEmail">アカウント名かメールアドレス</label>
                 <input name="accountOrEmail" id="accountOrEmail"/> <br />
