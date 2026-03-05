@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import chapter6.beans.User;
 
-@WebFilter( urlPatterns = { "/setting", "/edit" })
+@WebFilter(urlPatterns = { "/setting", "/edit" })
 public class LoginFilter implements Filter {
 
 	@Override
@@ -39,13 +39,9 @@ public class LoginFilter implements Filter {
 
 	@Override
 	public void destroy() {
-		// TODO 自動生成されたメソッド・スタブ
-
 	}
 
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
-		// TODO 自動生成されたメソッド・スタブ
-
 	}
 }

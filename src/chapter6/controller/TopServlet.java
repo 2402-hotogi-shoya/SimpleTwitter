@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
-
 import chapter6.beans.User;
 import chapter6.beans.UserComment;
 import chapter6.beans.UserMessage;
@@ -59,12 +57,10 @@ public class TopServlet extends HttpServlet {
         String userId = request.getParameter("user_id");
         String start = request.getParameter("start");
         String end = request.getParameter("end");
-        if (!StringUtils.isBlank(start)) {
-        	request.setAttribute("start", start);
-        }
-        if (!StringUtils.isBlank(end)) {
-        	request.setAttribute("end", end);
-        }
+
+        request.setAttribute("start", start);
+        request.setAttribute("end", end);
+
         List<UserMessage> messages = new MessageService().select(userId, start, end);
         List<UserComment> comments = new CommentService().select();
 

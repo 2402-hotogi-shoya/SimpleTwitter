@@ -117,7 +117,7 @@ public class MessageService {
 			} else {
 				//日付取得
 				Date date = new Date();
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				String formatNowDate = dateFormat.format(date);
 
 				endDate = formatNowDate + " 23:59:59";
