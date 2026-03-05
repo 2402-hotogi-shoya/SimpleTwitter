@@ -104,20 +104,23 @@ public class MessageService {
 				id = Integer.parseInt(userId);
 			}
 
-			//日付取得
-			Date date = new Date();
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
-			String formatNowDate = dateFormat.format(date);
-
-			//デフォルト
-			String startDate = "2026-01-01" + " 00:00:00";
-			String endDate = formatNowDate + " 23:59:59";
-
+			String startDate = "";
+			String endDate = "";
 			if (!StringUtils.isEmpty(start) && start.matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")) {
 				startDate = start + " 00:00:00";
+			} else {
+				startDate = "2026-01-01" + " 00:00:00";
 			}
+
 			if (!StringUtils.isEmpty(end) && end.matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")) {
 				endDate = end + " 23:59:59";
+			} else {
+				//日付取得
+				Date date = new Date();
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
+				String formatNowDate = dateFormat.format(date);
+
+				endDate = formatNowDate + " 23:59:59";
 			}
 
 			/*
